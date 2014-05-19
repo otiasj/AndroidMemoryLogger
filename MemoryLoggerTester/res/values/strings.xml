@@ -1,0 +1,10 @@
+<resources>
+
+    <string name="app_name">AmlTester</string>
+    <string name="first_activity">Try to find which activity is leaking memory...</string>
+    <string name="second_activity">Second activity</string>
+    <string name="third_activity">Third activity</string>
+    <string name="fourth_activity">Fourth activity</string>
+    <string name="fifth_activity">Fifth activity</string>
+
+</resources>
