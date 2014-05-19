@@ -1,5 +1,5 @@
-AndroidMemoryLogger
-===================
+Android Memory Logger
+=====================
 
 Graph your android application memory usage in real time.
 
