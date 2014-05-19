@@ -30,5 +30,4 @@ In your application just call :
 
 
 ### Credits :
-This library is using GraphView
-[a link](http://android-graphview.org/#)
+This library is using [GraphView](http://android-graphview.org/#)
