@@ -16,23 +16,35 @@
         android:layout_width="142dp"
         android:layout_height="wrap_content"
         android:text="@string/second_activity" />
-    
-        <Button
+
+    <Button
         android:id="@+id/button2"
         android:layout_width="142dp"
         android:layout_height="wrap_content"
         android:text="@string/third_activity" />
-        
-        <Button
+
+    <Button
         android:id="@+id/button3"
         android:layout_width="142dp"
         android:layout_height="wrap_content"
         android:text="@string/fourth_activity" />
-        
-        <Button
+
+    <Button
         android:id="@+id/button4"
         android:layout_width="142dp"
         android:layout_height="wrap_content"
         android:text="@string/fifth_activity" />
+
+    <Button
+        android:id="@+id/button5"
+        android:layout_width="142dp"
+        android:layout_height="wrap_content"
+        android:text="@string/sixth_activity" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="142dp"
+        android:layout_height="wrap_content"
+        android:text="@string/seventh_activity" />
 
 </LinearLayout>

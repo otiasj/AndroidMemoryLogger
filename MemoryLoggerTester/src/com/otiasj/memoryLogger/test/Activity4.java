@@ -9,7 +9,7 @@ import android.os.Message;
 import android.view.View;
 import android.view.View.OnClickListener;
 
-public class FourthActivity extends Activity {
+public class Activity4 extends Activity {
 
 	/**
 	 * see http://www.androiddesignpatterns.com/2013/01/inner-class-handler-memory-leak.html
@@ -30,7 +30,7 @@ public class FourthActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.fourthactivity);
+		this.setContentView(R.layout.activity4);
 		mMyLeakyHandler = new MyLeakyHandler();
 		mMyLeakyHandler.postDelayed(new Runnable() {
 		      @Override

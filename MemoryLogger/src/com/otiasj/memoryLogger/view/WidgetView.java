@@ -74,6 +74,22 @@ public class WidgetView extends LinearLayout {
         });
         titleBar.addView(resizeButton);
 
+        // Add the GC button
+        final Button gcButton = new Button(getContext(), null, android.R.attr.buttonStyleSmall);
+        gcButton.setMinHeight(0);
+        gcButton.setMinWidth(0);
+        gcButton.setText("Gc");
+        gcButton.setTextSize(8);
+        gcButton.setLayoutParams(buttonParams);
+        gcButton.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(final View v) {
+                System.gc();
+            }
+        });
+        titleBar.addView(gcButton);
+
         // Add the graphView
         mGraphView = new MemoryLoggerGraphView(context);
         mGraphView.setLayoutParams(mParams);

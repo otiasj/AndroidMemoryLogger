@@ -7,29 +7,36 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import android.content.Context;
+
 import com.otiasj.memoryLogger.loggers.FileLogger;
 import com.otiasj.memoryLogger.loggers.MemoryLogger;
 import com.otiasj.memoryLogger.loggers.OnMemoryLog;
 import com.otiasj.memoryLogger.loggers.WidgetLogger;
 import com.otiasj.memoryLogger.utils.MemoryUtils;
 
-
-import android.content.Context;
-
 /**
  * In your manifest add the permission :
+ * 
  * <pre>
  * {@code
  * <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
  * }
  * </pre>
+ * 
  * In your application onCreate method call :
+ * 
  * <pre>
- * MemoryTracker.getInstance().logToFile(context,"/sdcard/yourfile.csv").enableWidget(context).logToLogcat().start(1000, "myAppTag");
- * </pre> 
- *
+ * MemoryTracker.getInstance().logToFile(context, &quot;/sdcard/yourfile.csv&quot;).enableWidget(context).logToLogcat()
+ *         .start(1000, &quot;myAppTag&quot;);
+ * </pre>
  */
 public class Memory {
+
+    /**
+     * Set this to true if you want to explicitly call the garbage collector before logging the memory usage
+     */
+    public boolean doGCBeforeLogging = false;
 
     public static final String TAG = Memory.class.getCanonicalName();
     private static final int START_DELAY_MILLIS = 1000;
@@ -66,6 +73,7 @@ public class Memory {
 
     /**
      * Use this to output the logs to logcat
+     * 
      * @return
      */
     public Memory logToLogcat() {
@@ -117,7 +125,9 @@ public class Memory {
     private final TimerTask mLogUpdateRunnable = new TimerTask() {
         @Override
         public void run() {
-            System.gc();
+            if (doGCBeforeLogging) {
+                System.gc();
+            }
             logMemoryUsage(mTag);
         }
     };
