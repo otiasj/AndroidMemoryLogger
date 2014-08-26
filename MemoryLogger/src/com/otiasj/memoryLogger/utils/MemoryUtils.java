@@ -16,7 +16,7 @@ public class MemoryUtils {
      * @return the allocated memory in MB (String)
      */
     public String getAllocated() {
-        return decimalFormat.format(getAllocatedDouble());
+        return MemoryUtils.decimalFormat.format(getAllocatedDouble());
     }
 
     /**
@@ -30,7 +30,7 @@ public class MemoryUtils {
      * @return the heap size in MB (String)
      */
     public String getHeap() {
-        return decimalFormat.format(getHeapDouble());
+        return MemoryUtils.decimalFormat.format(getHeapDouble());
     }
 
     /**
@@ -44,7 +44,7 @@ public class MemoryUtils {
      * @return free memory in MB (String)
      */
     public String getFreeMemory() {
-        return decimalFormat.format(getFreeMemoryDouble());
+        return MemoryUtils.decimalFormat.format(getFreeMemoryDouble());
     }
 
     /**
@@ -59,7 +59,7 @@ public class MemoryUtils {
      */
     public String getPercentUsed() {
         final double current = getPercentUsedDouble();
-        return decimalPercentFormat.format(current);
+        return MemoryUtils.decimalPercentFormat.format(current);
     }
 
     /**
@@ -70,13 +70,21 @@ public class MemoryUtils {
     }
 
     /**
-     *  (e.g Bitmaps). Hence
-     * this api is useful to find out how much of native heap is allocated.
+     * This api is useful to find out how much of native heap is allocated.
      * 
      * @return the getNativeHeapAllocatedSize in MB
      */
     public double getNativeHeap() {
         return Debug.getNativeHeapAllocatedSize() / BYTES;
+    }
+
+    public double getNativeHeapFreeSize() {
+        return Debug.getNativeHeapFreeSize() / BYTES;
+    }
+
+    public double getNativeHeapUsed() {
+        final double total = getNativeHeap();
+        return total - getNativeHeapFreeSize();
     }
 
     /**

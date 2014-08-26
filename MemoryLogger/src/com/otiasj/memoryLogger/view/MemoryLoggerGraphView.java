@@ -22,12 +22,14 @@ public class MemoryLoggerGraphView extends LinearLayout {
     private GraphView mGraphView;
     private GraphViewSeries mMemoryUsed;
     private GraphViewSeries mMemoryAllocated;
+    private GraphViewSeries mNativeUsed;
 
     final private GraphViewDataInterface[] emptyData = new GraphViewDataInterface[] {
             new GraphViewData(0, 0), new GraphViewData(0, 0)
     };
     final private GraphViewSeriesStyle style1 = new GraphViewSeriesStyle(Color.rgb(200, 50, 00), 1);
     final private GraphViewSeriesStyle style2 = new GraphViewSeriesStyle(Color.rgb(90, 250, 00), 1);
+    final private GraphViewSeriesStyle style3 = new GraphViewSeriesStyle(Color.rgb(255, 255, 0), 1);
 
     public MemoryLoggerGraphView(final Context context) {
         super(context);
@@ -51,8 +53,10 @@ public class MemoryLoggerGraphView extends LinearLayout {
         // data
         mMemoryUsed = new GraphViewSeries("Used", style1, emptyData);
         mMemoryAllocated = new GraphViewSeries("Allocated", style2, emptyData);
+        mNativeUsed = new GraphViewSeries("Native", style3, emptyData);
         mGraphView.addSeries(mMemoryUsed);
         mGraphView.addSeries(mMemoryAllocated);
+        mGraphView.addSeries(mNativeUsed);
 
         // style
         mGraphView.getGraphViewStyle().setTextSize(8);
@@ -72,9 +76,11 @@ public class MemoryLoggerGraphView extends LinearLayout {
      * @param used
      * @param allocated
      */
-    public synchronized void update(final String title, final double used, final double allocated) {
+    public synchronized void update(final String title, final double used, final double allocated,
+            final double nativeUsed) {
         mMemoryUsed.appendData(new GraphViewData(MemoryLoggerGraphView.index, used), false, 1000);
         mMemoryAllocated.appendData(new GraphViewData(MemoryLoggerGraphView.index, allocated), false, 1000);
+        mNativeUsed.appendData(new GraphViewData(MemoryLoggerGraphView.index, nativeUsed), false, 1000);
         mGraphView.setTitle(title);
         mGraphView.redrawAll();
         MemoryLoggerGraphView.index++;

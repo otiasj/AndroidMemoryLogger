@@ -1,15 +1,14 @@
 package com.otiasj.memoryLogger.loggers;
 
-import com.otiasj.memoryLogger.utils.MemoryUtils;
-import com.otiasj.memoryLogger.view.MemoryLoggerGraphView;
-import com.otiasj.memoryLogger.view.OverlayWidget;
-import com.otiasj.memoryLogger.view.WidgetView;
-
-
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
+
+import com.otiasj.memoryLogger.utils.MemoryUtils;
+import com.otiasj.memoryLogger.view.MemoryLoggerGraphView;
+import com.otiasj.memoryLogger.view.OverlayWidget;
+import com.otiasj.memoryLogger.view.WidgetView;
 
 public class WidgetLogger implements OnMemoryLog {
 
@@ -27,9 +26,10 @@ public class WidgetLogger implements OnMemoryLog {
     }
 
     @Override
-    public void onLog(final String tag, final double allocated, final double heapSize, final double percent) {
+    public void onLog(final String tag, final double allocated, final double heapSize, final double percent,
+            final double nativeUsed, final double nativeHeapSize) {
         WidgetLogger.mHandler.sendMessage(WidgetLogger.mHandler.obtainMessage(UpdaterHandler.UPDATE_TEXT, new double[] {
-                allocated, heapSize, percent
+                allocated, heapSize, percent, nativeUsed
         }));
     };
 
@@ -46,9 +46,11 @@ public class WidgetLogger implements OnMemoryLog {
             if (msg.what == UpdaterHandler.UPDATE_TEXT) {
                 if (mGraphView != null) {
                     final double[] values = (double[]) msg.obj;
-                    final String log = "" + MemoryUtils.decimalFormat.format(values[0]) + "/" + MemoryUtils.decimalFormat.format(values[1])
-                            + " " + MemoryUtils.decimalPercentFormat.format(values[2]) + "%";
-                    mGraphView.update(log, values[0], values[1]);
+                    final String log = "" + MemoryUtils.decimalFormat.format(values[0]) + "/"
+                            + MemoryUtils.decimalFormat.format(values[1]) + " "
+                            + MemoryUtils.decimalPercentFormat.format(values[2]) + "% "
+                            + MemoryUtils.decimalPercentFormat.format(values[3]);
+                    mGraphView.update(log, values[0], values[1], values[3]);
                 }
             }
         }

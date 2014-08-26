@@ -6,10 +6,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-import com.otiasj.memoryLogger.utils.MemoryUtils;
-
 import android.content.Context;
 import android.util.Log;
+
+import com.otiasj.memoryLogger.utils.MemoryUtils;
 
 /**
  * Write a log to a sdcard file
@@ -30,7 +30,8 @@ public class FileLogger implements OnMemoryLog {
     }
 
     @Override
-    public void onLog(final String tag, final double allocated, final double heapSize, final double percent) {
+    public void onLog(final String tag, final double allocated, final double heapSize, final double percent,
+            final double nativeUsed, final double nativeHeapSize) {
         if (mLogPath != null) {
             try {
                 // Append data to the file
@@ -38,7 +39,11 @@ public class FileLogger implements OnMemoryLog {
                 if (mLogFile == null) {
                     mLogFile = new PrintWriter(new BufferedWriter(new FileWriter(file, true)));
                 }
-                mLogFile.println("" + MemoryUtils.decimalFormat.format(allocated) + "," + MemoryUtils.decimalFormat.format(heapSize) + "," + MemoryUtils.decimalPercentFormat.format(percent));
+                mLogFile.println("" + MemoryUtils.decimalFormat.format(allocated) + ","
+                        + MemoryUtils.decimalFormat.format(heapSize) + ","
+                        + MemoryUtils.decimalPercentFormat.format(percent) + ","
+                        + MemoryUtils.decimalPercentFormat.format(nativeUsed) + ","
+                        + MemoryUtils.decimalPercentFormat.format(nativeHeapSize));
                 mLogFile.flush();
             } catch (final IOException e) {
                 e.printStackTrace();

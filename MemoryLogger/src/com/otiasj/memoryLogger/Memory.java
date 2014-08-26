@@ -66,7 +66,6 @@ public class Memory {
      * @param filePath the path of the file to write the data
      */
     public Memory logToFile(final Context context, final String filePath) {
-        mLogcatLogger = new MemoryLogger();
         mLoggers.add(new WeakReference<OnMemoryLog>(new FileLogger(context, filePath)));
         return this;
     }
@@ -77,6 +76,7 @@ public class Memory {
      * @return
      */
     public Memory logToLogcat() {
+        mLogcatLogger = new MemoryLogger();
         mLoggers.add(new WeakReference<OnMemoryLog>(mLogcatLogger));
         return this;
     }
@@ -142,12 +142,14 @@ public class Memory {
         final double allocated = mMemUtils.getAllocatedDouble();
         final double heapSize = mMemUtils.getHeapDouble();
         final double percent = mMemUtils.getPercentUsedDouble();
+        final double nativeUsed = mMemUtils.getNativeHeapUsed();
+        final double nativeHeapSize = mMemUtils.getNativeHeap();
 
         for (final Iterator<WeakReference<OnMemoryLog>> iterator = mLoggers.iterator(); iterator.hasNext();) {
             final WeakReference<OnMemoryLog> weakRef = iterator.next();
             final OnMemoryLog logger = weakRef.get();
             if (logger != null) {
-                logger.onLog(tag, allocated, heapSize, percent);
+                logger.onLog(tag, allocated, heapSize, percent, nativeUsed, nativeHeapSize);
             } else {
                 iterator.remove();
             }
